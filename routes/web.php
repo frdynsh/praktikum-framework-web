@@ -58,8 +58,8 @@ Route::middleware('auth')->group(function () {
 
 // PERTEMUAN 4
 Route::get('/product', [ProductController::class, 'index']);
-Route::get('/product/create', [ProductController::class, 'create']);
-Route::post('/product', [ProductController::class, 'store']);
+Route::get('/product/create', [ProductController::class, 'create'])->name("product-create"); // PERTEMUAN 5
+Route::post('/product', [ProductController::class, 'store'])->name("product-store"); // PERTEMUAN 5
 Route::get('/product/{id}', [ProductController::class, 'show']);
 Route::get('/product/{id}/edit', [ProductController::class, 'edit']);
 Route::put('/product/{id}', [ProductController::class, 'update']);

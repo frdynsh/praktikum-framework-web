@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Product;
 
 class ProductController extends Controller
 {
@@ -19,7 +20,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        // PERTEMUAN 5
+        return view('master-data.product-master.create-product');
     }
 
     /**
@@ -27,7 +29,18 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // PERTEMUAN 5
+        $validasi_data = $request->validate([
+            'product_name' => 'required|max:255',
+            'unit' => 'required|max:50',
+            'type' => 'required|max:100',
+            'information' => 'nullable',
+            'qty' => 'required|integer',
+            'producer' => 'required|max:100',
+        ]);
+
+        Product::create($validasi_data);
+        return redirect()->back()->with('success', 'Product created successfully.');
     }
 
     /**
