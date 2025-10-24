@@ -50,7 +50,7 @@
 
                     <!-- Dropdown Content -->
                     <x-slot name="content">
-                        <x-dropdown-link :href="route('product-create')">
+                        <x-dropdown-link :href="route('product-index')">
                             Product Master
                         </x-dropdown-link>
                     </x-slot>
