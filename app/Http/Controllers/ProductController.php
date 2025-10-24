@@ -28,7 +28,7 @@ class ProductController extends Controller
                   ->orWhere('information', 'like', '%' . $search . '%');
             });
         }
-        // Pertemuan 10 Pagination
+        // PERTEMUAN 9
         $data = Product::paginate(2);
         return view('master-data.product-master.index-product', compact('data'));
     }
@@ -64,6 +64,7 @@ class ProductController extends Controller
      */
     public function show(string $id)
     {
+        // PERTEMUAN 9
         $product = Product::findOrFail($id);
         return view('master-data.product-master.detail-product', compact('product'));
     }
