@@ -61,8 +61,8 @@ Route::get('/product', [ProductController::class, 'index'])->name("product-index
 Route::get('/product/create', [ProductController::class, 'create'])->name("product-create"); // PERTEMUAN 5
 Route::post('/product', [ProductController::class, 'store'])->name("product-store"); // PERTEMUAN 5
 Route::get('/product/{id}', [ProductController::class, 'show']);
-Route::get('/product/{id}/edit', [ProductController::class, 'edit'])->name("product-edit"); //PERTEMUAN 7
-Route::put('/product/{id}', [ProductController::class, 'update'])->name("product-update"); //PERTEMUAN 7
-Route::delete('/product/{id}', [ProductController::class, 'destroy']);
+Route::get('/product/{id}/edit', [ProductController::class, 'edit'])->name("product-edit"); // PERTEMUAN 7
+Route::put('/product/{id}', [ProductController::class, 'update'])->name("product-update"); // PERTEMUAN 7
+Route::delete('/product/{id}', [ProductController::class, 'destroy'])->name("product-deleted"); // PERTEMUAN 8
 
 require __DIR__.'/auth.php';
