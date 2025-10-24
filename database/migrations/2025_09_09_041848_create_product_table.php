@@ -10,7 +10,8 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up(): void
-    {
+    {   
+                // PERTEMUAN 3
         Schema::create('product', function (Blueprint $table) {
             $table->id();
 
@@ -30,6 +31,7 @@ return new class extends Migration
      */
     public function down(): void
     {
+        // PERTEMUAN 3
         Schema::dropIfExists('product');
     }
 };
