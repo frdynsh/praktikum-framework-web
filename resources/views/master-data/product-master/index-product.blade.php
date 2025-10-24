@@ -7,6 +7,23 @@
 
     <div class="m-5 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="overflow-x-auto">
+            @if (session('success'))
+                <div class="mb-4 rounded-lg bg-green-100 p-4 text-green-700">
+                    {{ session('success') }}
+                </div>
+            @elseif (session('error'))
+                <div class="mb-4 rounded-lg bg-red-100 p-4 text-red-700">
+                    {{ session('error') }}
+                </div>
+            @endif
+
+            <form method="GET" action="{{ route('product-index') }}" class="mb-4 flex items-center">
+                <input type="text" name="search" value="{{ request('search') }}" placeholder="cari produk.." class="w-1/4 rounded-lg border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-500">
+                <button type="submit" class="ml-2 rounded-lg bg-green-500 px-4 py-2 text-white shadow-lg hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500">
+                    Cari
+                </button>
+            </form>
+
             <a href="{{ route('product-create')}}">
                 <button class="px-6 py-4 text-white bg-green-500 border border-green-500 rounded-lg shadow-lg hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500">
                     Add product data
@@ -28,10 +45,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($data as $item)
+                    @forelse ($data as $item)
                     <tr class="bg-white">
-                        <td class="px-4 py-2 border border-gray-200">1</td>
-                        <td class="px-4 py-2 border border-gray-200">{{ $item->product_name }}</td>
+                        <td class="px-4 py-2 border border-gray-200">{{ $item->id }}</td>
+                        <td class="px-4 py-2 border border-gray-200 hover:text-blue-500 hover:underline">
+                            <a href="{{ route('product-detail', $item->id) }}">
+                                {{ $item->product_name }}
+                            </a>
+                        </td>
                         <td class="px-4 py-2 border border-gray-200">{{ $item->unit }}</td>
                         <td class="px-4 py-2 border border-gray-200">{{ $item->type }}</td>
                         <td class="px-4 py-2 border border-gray-200">{{ $item->information }}</td>
@@ -40,17 +61,22 @@
                         <td class="px-4 py-2 border border-gray-200">
                             <a href="{{ route('product-edit', $item->id) }}"
                                 class="px-2 text-blue-600 hover:text-blue-800">Edit</a>
-                            <button class="px-2 text-red-600 hover:text-red-800" onclick="confirmDelete(1)">Hapus</button>
+                            <button class="px-2 text-red-600 hover:text-red-800" onclick="confirmDelete('{{ route('product-deleted', $item->id) }}')">Hapus</button>
                         </td>
                     </tr>
-                    @endforeach
-                    <!-- Tambahkan baris lainnya sesuai kebutuhan -->
+                    @empty
+                        <p class="mb-4 text-center text-2xl font-bold text-red-500">Produk tidak ditemukan.</p>
+                    @endforelse                   
                 </tbody>
             </table>
+
+            <div class="mt-4">
+                {{  $data->appends(['search' => request('search')])->links() }}
+            </div>
         </div>
     </div>
     <script>
-        function confirmDelete(id, deleteUrl) {
+        function confirmDelete(deleteUrl) {
             if (confirm('Apakah Anda yakin ingin menghapus data ini ? ')) {
                 // Jika user mengonfirmasi, kita dapat membuat form dan mengirimkan permintaan delete
                 let form = document.createElement('form');
