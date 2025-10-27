@@ -6,7 +6,7 @@
     </x-slot>
 
 
-    <div class="container mx-auto p-4">
+    <div class="container m-5 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="overflow-x-auto rounded-lg bg-white p-6 shadow-md">
             <a href="{{route('product-index')}}" class="text-blue-500 hover:underline"><- Back</a>
             <div class="mt-4">

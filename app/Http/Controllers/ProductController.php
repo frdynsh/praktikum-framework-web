@@ -25,11 +25,17 @@ class ProductController extends Controller
             $search = $request->search;
             $query->where(function ($q) use ($search) {
                 $q->where('product_name', 'like', '%' . $search . '%')
-                  ->orWhere('information', 'like', '%' . $search . '%');
+                ->orWhere('information', 'like', '%' . $search . '%');
             });
         }
+
+        // Sorting
+        if ($request->has('sort') && $request->has('direction')) {
+            $query->orderBy($request->sort, $request->direction);
+        }
+
         // PERTEMUAN 9
-        $data = Product::paginate(2);
+        $data = $query->paginate(3);
         return view('master-data.product-master.index-product', compact('data'));
     }
 
@@ -56,7 +62,7 @@ class ProductController extends Controller
         ]);
 
         Product::create($validasi_data);
-        return redirect()->back()->with('success', 'Product created successfully.');
+        return redirect()->route('product-index')->with('success', 'Produk berhasil ditambahkan!');
     }
 
     /**
@@ -83,7 +89,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $request->validate([
+        $validasi_data = $request->validate([
             'product_name' => 'required|string|max:255',
             'unit' => 'required|string|max:50',
             'type' => 'required|string|max:100',
@@ -93,15 +99,8 @@ class ProductController extends Controller
         ]);
 
         $product = Product::findOrFail($id);
-        $product->update([
-            'product_name' => $request->product_name,
-            'unit' => $request->unit,
-            'type' => $request->type,
-            'information' => $request->information,
-            'qty' => $request->qty,
-            'producer' => $request->producer,
-        ]);
-        return redirect()->back()->with('success', 'Product updated successfully.');
+        $product->update($validasi_data);
+        return redirect()->route('product-index')->with('success', 'Produk berhasil diperbarui!');
     }
 
     /**
@@ -109,13 +108,11 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-        
-
         $product = Product::find($id);
         if ($product) {
             $product->delete();
-            return redirect()->back()->with('success', 'Product deleted successfully.');
+            return redirect()->route('product-index')->with('success', 'Produk berhasil dihapus!');
         }
-        return redirect()->back()->with('error', 'Product not found.');
+        return redirect()->route('product-index')->with('error', 'Produk tidak ditemukan.');
     }
 }
