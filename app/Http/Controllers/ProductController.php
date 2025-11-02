@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Exports\ProductsExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ProductController extends Controller
 {
@@ -114,5 +116,11 @@ class ProductController extends Controller
             return redirect()->route('product-index')->with('success', 'Produk berhasil dihapus!');
         }
         return redirect()->route('product-index')->with('error', 'Produk tidak ditemukan.');
+    }
+
+    // PERTEMUAN 10
+    public function exportExcel()
+    {
+        return Excel::download(new ProductsExport, 'products.xlsx');
     }
 }
