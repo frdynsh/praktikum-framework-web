@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Exports\ProductsExport;
 use Maatwebsite\Excel\Facades\Excel;
+use Spatie\LaravelPdf\Facades\Pdf;
+use Spatie\Browsershot\Browsershot;
 
 class ProductController extends Controller
 {
@@ -122,5 +124,28 @@ class ProductController extends Controller
     public function exportExcel()
     {
         return Excel::download(new ProductsExport, 'products.xlsx');
+    }
+
+    public function exportPdf()
+    {
+        $products = Product::all();
+
+        return Pdf::view('exports.products-pdf', compact('products'))
+            ->format('a4')
+            ->download('product-export.pdf');
+    }
+
+    public function exportJpg()
+    {
+        $products = Product::all();
+
+        // Simpan tampilan Blade menjadi gambar JPG melalui Browsershot
+        $imagePath = storage_path('app/product-export.jpg');
+
+        Browsershot::html(view('exports.products-pdf', compact('products'))->render())
+            ->windowSize(1280, 720)
+            ->save($imagePath);
+
+        return response()->download($imagePath, 'product-export.jpg');
     }
 }

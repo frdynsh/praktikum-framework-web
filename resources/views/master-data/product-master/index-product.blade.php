@@ -50,10 +50,24 @@
             </a>
             <a href="{{ route('product-export-excel') }}">
                 <button
-                    class="px-6 py-4 text-white bg-green-500 border border-green-500 rounded-lg shadow-lg hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500">
+                    class="px-6 py-4 text-white bg-blue-500 border border-blue-500 rounded-lg shadow-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
                     Export to Excel
                 </button>
             </a>
+            <a href="{{ route('product-export-pdf') }}">
+                <button
+                    class="px-6 py-4 text-white bg-red-500 border border-red-500 rounded-lg shadow-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500">
+                    Export to PDF
+                </button>
+            </a>
+            <a href="{{ route('product-export-jpg') }}">
+                <button
+                    class="px-6 py-4 text-white bg-yellow-500 border border-yellow-500 rounded-lg shadow-lg hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                    Export to JPG
+                </button>
+            </a>
+
+
 
             <!-- TABEL DATA PRODUK -->
             <table class="mt-5 min-w-full border border-collapse border-gray-200">
