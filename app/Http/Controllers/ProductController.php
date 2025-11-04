@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\Supplier;
 use App\Exports\ProductsExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Spatie\LaravelPdf\Facades\Pdf;
@@ -21,6 +22,7 @@ class ProductController extends Controller
         
         // Membuat query builder baru untuk model product
         $query = Product::query();
+        $query = Product::with('supplier');
 
         // cek apakah ada parameter 'search' di request
         if ($request->has('search') && $request->search != '') {
@@ -48,7 +50,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('master-data.product-master.create-product');
+        $suppliers = Supplier::all();
+        return view('master-data.product-master.create-product', compact('suppliers'));
     }
 
     /**
@@ -63,6 +66,7 @@ class ProductController extends Controller
             'information' => 'nullable',
             'qty' => 'required|integer',
             'producer' => 'required|max:100',
+            'supplier_id' => 'required|exists:suppliers,id',
         ]);
 
         Product::create($validasi_data);

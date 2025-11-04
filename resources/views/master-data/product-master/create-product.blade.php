@@ -111,7 +111,26 @@
                                     required
                                 >
                             </div>
-
+                            
+                            <!-- Supplier -->
+                            <div class="form-group">
+                                <label for="supplier_id" class="block text-sm font-medium text-gray-700">
+                                    Supplier
+                                </label>
+                                <select
+                                    id="supplier_id"
+                                    name="supplier_id"
+                                    class="block w-full p-2 mt-1 border border-gray-300 rounded-md shadow-sm
+                                           focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                    required
+                                >
+                                    <option value="">Pilih Supplier</option>
+                                    @foreach ($suppliers as $supplier)
+                                        <option value="{{ $supplier->id }}">{{ $supplier->supplier_name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            
                             <!-- Submit Button -->
                             <button
                                 type="submit"

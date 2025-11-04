@@ -11,10 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            if (!Schema::hasColumn('users', 'role')) {
-                $table->enum('role', ['root', 'admin', 'user'])->default('user');
-            }
+        Schema::table('product', function (Blueprint $table) {
+            $table -> foreignId('supplier_id')->nullable()->constrained();
         });
     }
 
@@ -23,8 +21,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('role');
+        Schema::table('product', function (Blueprint $table) {
+            $table->dropForeign(['supplier_id']);
+            $table->dropColumn('supplier_id');
         });
     }
 };
